@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+:root {
+  --background-color: #000;
+  --text-color: #fff;
+}
+
+@theme inline {
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  background-color: var(--background-color);
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.logo {
+  fill: var(--text-color);
+}
+
+/* Navigation */
+.navs {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.navs-wrap {
+  border-color: var(--text-color);
+}
+
+/* Nav link underline animation */
+.nav-link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #ffffff;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.nav-link.active::after {
+  transform: scaleX(1);
+}
+
+/* Split line */
+.split-line {
+  border-color: var(--text-color);
+}
+
+/* Table styles for contact form */
+.table-border {
+  @apply border text-lg md:text-xl lg:text-2xl text-center flex justify-center items-center min-h-[44px];
+  border-color: var(--text-color);
+}
+
+.table-input {
+  @apply flex w-full h-full;
+}
+
+.table-input > div {
+  @apply w-full h-full;
+}
+
+/* Product card hover */
+.product-item img {
+  transition: all 0.25s ease-in;
+}
+
+.product-item img:hover {
+  transform: translateY(-8px);
+}
+
+/* Banner background */
+.banner-bg {
+  background-image: url('/images/filter-rods.jpg');
+  background-repeat: repeat;
+}
+
+/* Submit button dynamic color */
+.cbutton {
+  background-color: var(--text-color) !important;
+  color: var(--background-color) !important;
+}
+
+/* Advantage sections */
+.advantage-box {
+  background-color: var(--background-color);
+}
+
+.advantage-title {
+  background-color: var(--background-color);
+}
