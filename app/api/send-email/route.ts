@@ -18,8 +18,9 @@ export async function POST(request: Request) {
     const data = parsed.data;
 
     await getResend().emails.send({
-      from: 'Contact Form <onboarding@resend.dev>',
-      to: ['indotobaccospecial@gmail.com'],
+      from: `${data.name} <${process.env.EMAIL_FROM ?? 'marketing@itsfilterrod.com'}>`,
+      to: [process.env.EMAIL_TO ?? 'marketing@itsfilterrod.com'],
+      replyTo: data.email,
       subject: `New Inquiry from ${data.name}`,
       react: ContactInquiryEmail({ data }),
     });
