@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/lib/i18n/navigation';
 import { locales, localeNames, type Locale } from '@/lib/i18n/config';
 import { Logo } from '@/components/svg/logo';
+import { Menu, X } from 'lucide-react';
 
 const navItems = [
   { id: 'home', path: '/' as const, name: 'home' },
@@ -95,29 +96,39 @@ export function Navbar() {
 
         {/* Mobile menu toggle */}
         <div className="md:hidden">
-          <div className="capitalize nav-link cursor-pointer select-none" onClick={() => switchMenu()}>
-            {open ? t('close') : t('menu')}
-          </div>
+          <button
+            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+            onClick={() => switchMenu()}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+          >
+            {open ? (
+              <X size={24} className="text-white" />
+            ) : (
+              <Menu size={24} className="text-white" />
+            )}
+          </button>
         </div>
       </div>
 
       {/* Mobile fullscreen menu */}
       {open && (
-        <div className="md:hidden fixed top-0 left-0 w-full h-screen bg-black flex flex-col justify-center items-center gap-3 z-50">
-          {/* Close button */}
-          <div
-            className="absolute top-4 right-4 capitalize nav-link cursor-pointer select-none text-white text-xl"
+        <div className="md:hidden fixed inset-0 w-full h-screen bg-black/95 backdrop-blur-sm flex flex-col justify-center items-center gap-4 z-50">
+          {/* Close button - fixed position top right */}
+          <button
+            className="absolute top-6 right-6 p-3 hover:bg-white/10 rounded-full transition-colors"
             onClick={() => switchMenu()}
+            aria-label="Close menu"
           >
-            {t('close')}
-          </div>
+            <X size={32} className="text-white" />
+          </button>
+          
           {menuType === 'langs'
             ? availableLocales.map((l) => (
                 <Link
                   key={l}
                   href={pathname.replace(`/${locale}`, '') || '/'}
                   locale={l}
-                  className="capitalize text-3xl font-bold nav-link text-white"
+                  className="capitalize text-3xl font-bold nav-link text-white hover:text-gray-300 transition-colors"
                 >
                   {localeNames[l as Locale]}
                 </Link>
@@ -126,7 +137,7 @@ export function Navbar() {
                 <Link
                   key={nav.id}
                   href={nav.path}
-                  className={`capitalize text-3xl font-bold nav-link text-white ${isActive(nav.path) ? 'active' : ''}`}
+                  className={`capitalize text-3xl font-bold nav-link text-white hover:text-gray-300 transition-colors ${isActive(nav.path) ? 'underline' : ''}`}
                 >
                   {t(nav.name)}
                 </Link>
