@@ -12,6 +12,7 @@ const navItems = [
   { id: 'join-us', path: '/join-us' as const, name: 'join us' },
   { id: 'about', path: '/about' as const, name: 'about' },
   { id: 'product', path: '/product' as const, name: 'product' },
+  { id: 'blog', path: '/blog' as const, name: 'blog' },
   { id: 'faq', path: '/faq' as const, name: 'FAQ' },
 ];
 
