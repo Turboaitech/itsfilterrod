@@ -149,28 +149,28 @@ Evaluate their customer service:
 
 ### Our Strengths
 
-âœ… **Quality First**
+âœ?**Quality First**
 - ISO 9001 certified
 - CORESTA testing protocols
 - Zero-defect philosophy
 
-âœ… **Technical Excellence**
+âœ?**Technical Excellence**
 - Modern production equipment
 - Experienced technical team
 - R&D capabilities
 
-âœ… **Customer Focus**
+âœ?**Customer Focus**
 - Responsive communication
 - Flexible MOQ options
 - Custom development support
 
-âœ… **Strategic Location**
+âœ?**Strategic Location**
 - Batam, Indonesia FTZ
 - Competitive labor costs
 - Tax-advantaged zone
 - Easy access to Asian markets
 
-âœ… **Competitive Pricing**
+âœ?**Competitive Pricing**
 - Factory-direct pricing
 - Volume discounts
 - Transparent quotations
@@ -179,11 +179,11 @@ Evaluate their customer service:
 
 Ready to discuss your filter rod requirements?
 
-1. **Send specifications** to info@itsfilterrod.com
+1. **Send specifications** to marketing@itsfilterrod.com
 2. **Receive quotation** within 48 hours
 3. **Request samples** for evaluation
 4. **Start your order** with confidence
 
 ---
 
-*Contact us today: info@itsfilterrod.com | WhatsApp: +62 xxx xxxx xxxx*
+*Contact us today: marketing@itsfilterrod.com | WhatsApp: +62 xxx xxxx xxxx*

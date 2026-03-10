@@ -131,4 +131,4 @@ Capsule filter technology offers tobacco manufacturers a powerful tool for produ
 
 ---
 
-*Contact ITS Filter Rod for capsule filter samples and pricing: info@itsfilterrod.com*
+*Contact ITS Filter Rod for capsule filter samples and pricing: marketing@itsfilterrod.com*

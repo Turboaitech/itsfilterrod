@@ -105,4 +105,4 @@ The right filter choice depends on your specific market needs, target consumers,
 
 ---
 
-*For product inquiries, contact us at info@itsfilterrod.com*
+*For product inquiries, contact us at marketing@itsfilterrod.com*
