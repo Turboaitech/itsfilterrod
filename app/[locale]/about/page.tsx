@@ -1,100 +1,75 @@
-'use client';
-
 import { useRawT } from '@/lib/i18n/use-raw-t';
-import { useRef, useEffect } from 'react';
-import Image from 'next/image';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { getRawT } from '@/lib/i18n/get-raw-t';
+import type { Metadata } from 'next';
+import { siteConfig } from '@/lib/seo/config';
+import { locales, type Locale } from '@/lib/i18n/config';
+import { AboutContent } from './about-content';
 
-gsap.registerPlugin(ScrollTrigger);
+type Props = {
+  params: Promise<{ locale: string }>;
+};
 
-const title = ['PT. Indonesian', 'Tobacco', 'Special', 'Filter', 'Rod'];
+const aboutMetadata: Record<string, { title: string; description: string }> = {
+  en: {
+    title: 'About Us - Cigarette Filter Rod Manufacturer in Indonesia',
+    description: 'Learn about PT. Indonesian Tobacco Special Filter Rod - a leading cigarette filter rod manufacturer based in Batam, Indonesia. Quality, innovation, and reliability since establishment.',
+  },
+  zh: {
+    title: '关于我们 - 印尼香烟滤棒制造商',
+    description: '了解印尼烟草专用滤嘴厂 - 位于印尼巴淡岛的领先香烟滤棒制造商。自成立以来，始终坚持品质、创新与可靠。',
+  },
+  id: {
+    title: 'Tentang Kami - Produsen Filter Rod Rokok di Indonesia',
+    description: 'Pelajari tentang PT. Indonesian Tobacco Special Filter Rod - produsen filter rod rokok terkemuka di Batam, Indonesia. Kualitas, inovasi, dan keandalan.',
+  },
+  vi: {
+    title: 'Về Chúng Tôi - Nhà Sản Xuất Đầu Lọc Thuốc Lá tại Indonesia',
+    description: 'Tìm hiểu về PT. Indonesian Tobacco Special Filter Rod - nhà sản xuất đầu lọc thuốc lá hàng đầu tại Batam, Indonesia.',
+  },
+  ms: {
+    title: 'Tentang Kami - Pengeluar Filter Rod Rokok di Indonesia',
+    description: 'Ketahui tentang PT. Indonesian Tobacco Special Filter Rod - pengeluar filter rod rokok terkemuka di Batam, Indonesia.',
+  },
+  ja: {
+    title: '会社概要 - インドネシアのタバコフィルターロッドメーカー',
+    description: 'PT. Indonesian Tobacco Special Filter Rodについて - インドネシア・バタム島の大手タバコフィルターロッドメーカー。',
+  },
+  ko: {
+    title: '회사 소개 - 인도네시아 담배 필터 로드 제조업체',
+    description: 'PT. Indonesian Tobacco Special Filter Rod에 대해 알아보세요 - 인도네시아 바탐의 선두 담배 필터 로드 제조업체.',
+  },
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const meta = aboutMetadata[locale as Locale] || aboutMetadata.en;
+  
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: {
+      canonical: `${siteConfig.url}/${locale}/about`,
+      languages: Object.fromEntries(
+        locales.map((l) => [l, `${siteConfig.url}/${l}/about`])
+      ),
+    },
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url: `${siteConfig.url}/${locale}/about`,
+      type: 'website',
+      images: [
+        {
+          url: `${siteConfig.url}/images/photo3.jpg`,
+          width: 800,
+          height: 600,
+          alt: 'PT. Indonesian Tobacco Special Filter Rod Factory',
+        },
+      ],
+    },
+  };
+}
 
 export default function AboutPage() {
-  const t = useRawT();
-  const heroRef = useRef<HTMLElement>(null);
-  const aboutTextRef = useRef<HTMLDivElement>(null);
-  const titleBoxRef = useRef<HTMLDivElement>(null);
-
-  const description =
-    'We are a leading provider of high-quality filter rods for the tobacco industry, based in Batam, Indonesia. Our focus is on delivering reliable and innovative solutions tailored to our clients\' specific needs. With a commitment to quality and efficiency, we ensure that our products meet the highest standards in the industry.';
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const hero = heroRef.current;
-      const aboutEl = aboutTextRef.current;
-      const titleBox = titleBoxRef.current;
-
-      if (hero && aboutEl && titleBox) {
-        const aboutHeight = aboutEl.scrollHeight;
-        const titleBoxHeight = titleBox.scrollHeight;
-
-        ScrollTrigger.create({
-          trigger: hero,
-          start: 'top top',
-          end: `bottom ${aboutHeight + titleBoxHeight + 5}px`,
-          pin: aboutEl,
-        });
-      }
-    });
-
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <div className="page page-about">
-      {/* Hero — pinned, title box scrolls up to meet ABOUT text */}
-      <section
-        ref={heroRef}
-        className="h-[calc(100vh-54px)] flex flex-col justify-between items-center p-[10px] lg:p-[30px]"
-      >
-        <div ref={aboutTextRef} className="text-center">
-          <div className="text-[60px] md:text-[80px] lg:text-[100px] leading-none uppercase font-bold">
-            {t('about')}
-          </div>
-        </div>
-        <div ref={titleBoxRef} className="text-center">
-          {title.map((item, index) => (
-            <div
-              key={index}
-              className="text-[60px] md:text-[80px] lg:text-[100px] leading-none uppercase font-bold"
-            >
-              {t(item)}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Description */}
-      <section className="w-full p-[10px] lg:p-[30px]">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 mt-[200px]">
-          <div className="w-full h-full rounded-3xl overflow-hidden">
-            <Image
-              src="/images/photo3.jpg"
-              alt="About"
-              width={800}
-              height={600}
-              className="h-full w-full object-cover"
-            />
-          </div>
-          <div className="w-full break-words text-[36px]">
-            {t(description)}
-          </div>
-        </div>
-      </section>
-
-      {/* Map */}
-      <section className="w-full p-[10px] lg:p-[30px]">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5641.404040707617!2d104.0722289244047!3d1.1059626384130419!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d989faf7b71095%3A0x967ecb3f1fcbfc23!2sTunas%20Batam%20Center%20Industrial%20Estate!5e0!3m2!1sen!2sus!4v1725687864048!5m2!1sen!2sus"
-          width="100%"
-          height="450"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
-      </section>
-    </div>
-  );
+  return <AboutContent />;
 }

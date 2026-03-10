@@ -1,94 +1,109 @@
-'use client';
+import type { Metadata } from 'next';
+import { siteConfig } from '@/lib/seo/config';
+import { locales, type Locale } from '@/lib/i18n/config';
+import { FaqContent } from './faq-content';
+import { StructuredData } from '@/components/seo/structured-data';
+import { generateFAQSchema } from '@/lib/seo/structured-data';
 
-import { useState } from 'react';
-import { useRawT } from '@/lib/i18n/use-raw-t';
-import { ChevronRight } from 'lucide-react';
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+const faqMetadata: Record<string, { title: string; description: string }> = {
+  en: {
+    title: 'FAQ - Frequently Asked Questions About Cigarette Filter Rods',
+    description: 'Find answers to common questions about our cigarette filter rods: product specifications, MOQ, customization options, delivery times, quality certifications, and more.',
+  },
+  zh: {
+    title: '常见问题 - 香烟滤棒相关问答',
+    description: '查找有关我们香烟滤棒的常见问题解答：产品规格、最小起订量、定制选项、交货时间、质量认证等。',
+  },
+  id: {
+    title: 'FAQ - Pertanyaan Umum Tentang Filter Rod Rokok',
+    description: 'Temukan jawaban atas pertanyaan umum tentang filter rod rokok kami: spesifikasi produk, MOQ, opsi kustomisasi, waktu pengiriman, sertifikasi kualitas.',
+  },
+  vi: {
+    title: 'FAQ - Câu Hỏi Thường Gặp Về Đầu Lọc Thuốc Lá',
+    description: 'Tìm câu trả lời cho các câu hỏi thường gặp về đầu lọc thuốc lá: thông số kỹ thuật, MOQ, tùy chỉnh, thời gian giao hàng, chứng nhận chất lượng.',
+  },
+  ms: {
+    title: 'FAQ - Soalan Lazim Mengenai Filter Rod Rokok',
+    description: 'Cari jawapan untuk soalan lazim tentang filter rod rokok kami: spesifikasi produk, MOQ, pilihan penyesuaian, masa penghantaran, pensijilan kualiti.',
+  },
+  ja: {
+    title: 'FAQ - タバコフィルターロッドに関するよくある質問',
+    description: 'タバコフィルターロッドに関するよくある質問と回答：製品仕様、最小注文数量、カスタマイズオプション、納期、品質認証など。',
+  },
+  ko: {
+    title: 'FAQ - 담배 필터 로드에 관한 자주 묻는 질문',
+    description: '담배 필터 로드에 대한 자주 묻는 질문 답변: 제품 사양, MOQ, 맞춤화 옵션, 배송 시간, 품질 인증 등.',
+  },
+};
 
 const faqItems = [
   {
-    label: 'What are the main functions and features of your special filter sticks?',
-    content:
-      'Our filter sticks can include different flavored capsules based on customer requirements to enhance aroma, reduce throat irritation, and improve the smoking-replacement experience. The structure is a round cotton rod that improves the overall taste.',
+    question: 'What are the main functions and features of your special filter sticks?',
+    answer: 'Our filter sticks can include different flavored capsules based on customer requirements to enhance aroma, reduce throat irritation, and improve the smoking-replacement experience. The structure is a round cotton rod that improves the overall taste.',
   },
   {
-    label: 'For which types of tobacco products or usage scenarios are these capsule filter tips suitable?',
-    content:
-      'Our capsule essence extraction technology is suitable for all types of tobacco products and compatible with various cigarette and flavor-enhancement scenarios.',
+    question: 'For which types of tobacco products or usage scenarios are these capsule filter tips suitable?',
+    answer: 'Our capsule essence extraction technology is suitable for all types of tobacco products and compatible with various cigarette and flavor-enhancement scenarios.',
   },
   {
-    label: 'What sizes or specifications do your products have? Can the length or capsule flavor be customized?',
-    content:
-      'Filter length ranges from 80–150 mm, diameter 5.0–8.0 mm. We can customize length, diameter, and capsule flavors based on customer needs.',
+    question: 'What sizes or specifications do your products have? Can the length or capsule flavor be customized?',
+    answer: 'Filter length ranges from 80–150 mm, diameter 5.0–8.0 mm. We can customize length, diameter, and capsule flavors based on customer needs.',
   },
   {
-    label: 'What is the minimum order quantity (MOQ)? What is the general delivery time?',
-    content: 'MOQ: 20-foot container: shipped in 3 days; 40-foot container: shipped in 8 days.',
+    question: 'What is the minimum order quantity (MOQ)? What is the general delivery time?',
+    answer: 'MOQ: 20-foot container: shipped in 3 days; 40-foot container: shipped in 8 days.',
   },
   {
-    label: 'How many capsule flavors do you offer?',
-    content:
-      'We offer various flavors such as strawberry and banana, and can expand based on customer needs.',
+    question: 'How many capsule flavors do you offer?',
+    answer: 'We offer various flavors such as strawberry and banana, and can expand based on customer needs.',
   },
   {
-    label: 'Can capsule flavors or aromas be customized?',
-    content:
-      'Yes, capsule flavors and aromas can be fully customized, including mint and fruit types.',
+    question: 'Can capsule flavors or aromas be customized?',
+    answer: 'Yes, capsule flavors and aromas can be fully customized, including mint and fruit types.',
   },
   {
-    label: 'What quality standards or certifications does your production follow?',
-    content: 'International standards.',
+    question: 'What quality standards or certifications does your production follow?',
+    answer: 'International standards.',
   },
   {
-    label: 'Do you provide sample testing or prototyping services?',
-    content:
-      'If a contract is signed and payment completed, we offer free samples. If not, customers must pay for samples and shipping.',
+    question: 'Do you provide sample testing or prototyping services?',
+    answer: 'If a contract is signed and payment completed, we offer free samples. If not, customers must pay for samples and shipping.',
   },
 ];
 
-export default function FaqPage() {
-  const t = useRawT();
-  const [openIndex, setOpenIndex] = useState(0);
-
-  const toggle = (index: number) => {
-    setOpenIndex(openIndex === index ? -1 : index);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const meta = faqMetadata[locale as Locale] || faqMetadata.en;
+  
+  return {
+    title: meta.title,
+    description: meta.description,
+    alternates: {
+      canonical: `${siteConfig.url}/${locale}/faq`,
+      languages: Object.fromEntries(
+        locales.map((l) => [l, `${siteConfig.url}/${l}/faq`])
+      ),
+    },
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url: `${siteConfig.url}/${locale}/faq`,
+      type: 'website',
+    },
   };
+}
 
+export default function FaqPage() {
+  const faqSchema = generateFAQSchema(faqItems);
+  
   return (
-    <div className="page page-faq">
-      <section className="flex flex-col justify-between items-center p-[10px] lg:p-[30px]">
-        <div className="text-center">
-          <div className="text-[60px] md:text-[80px] lg:text-[100px] leading-none uppercase font-bold">
-            {t('FAQ')}
-          </div>
-        </div>
-      </section>
-
-      <section className="w-full p-[10px] lg:p-[30px]">
-        <div className="w-full flex flex-col">
-          {faqItems.map((item, index) => (
-            <div key={index} className="border-b border-gray-700">
-              <button
-                onClick={() => toggle(index)}
-                className="w-full flex items-center justify-between p-3 group hover:bg-white transition-all text-left"
-              >
-                <span className="truncate text-xl font-bold text-[var(--text-color)] group-hover:text-black transition-all">
-                  {index + 1}. {t(item.label)}
-                </span>
-                <ChevronRight
-                  className={`w-5 h-5 shrink-0 ml-auto text-[var(--text-color)] group-hover:text-black transition-transform duration-200 ${
-                    openIndex === index ? 'rotate-90' : ''
-                  }`}
-                />
-              </button>
-              {openIndex === index && (
-                <div className="p-3">
-                  <p className="text-[var(--text-color)] text-lg">{t(item.content)}</p>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-    </div>
+    <>
+      <StructuredData data={faqSchema} />
+      <FaqContent />
+    </>
   );
 }

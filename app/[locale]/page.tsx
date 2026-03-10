@@ -5,18 +5,49 @@ import { TextSlideUp } from '@/components/animations/text-slide-up';
 import { ContactForm } from '@/components/contact-form';
 import { Logo } from '@/components/svg/logo';
 import { Link } from '@/lib/i18n/navigation';
+import { siteConfig, localeMetadata } from '@/lib/seo/config';
+import { locales, type Locale } from '@/lib/i18n/config';
 
-export async function generateMetadata(): Promise<Metadata> {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
   const t = await getRawT();
+  const meta = localeMetadata[locale as Locale] || localeMetadata.en;
+  
   return {
-    title: t('seo.title'),
-    description: t('seo.description'),
+    title: meta.title,
+    description: meta.description,
     keywords: t('seo.keywords'),
     authors: [{ name: t('seo.author') }],
+    alternates: {
+      canonical: `${siteConfig.url}/${locale}`,
+      languages: Object.fromEntries(
+        locales.map((l) => [l, `${siteConfig.url}/${l}`])
+      ),
+    },
     openGraph: {
-      title: t('seo.title'),
-      description: t('seo.description'),
+      title: meta.title,
+      description: meta.description,
+      url: `${siteConfig.url}/${locale}`,
+      siteName: siteConfig.name,
       type: 'website',
+      images: [
+        {
+          url: `${siteConfig.url}/og-image.jpg`,
+          width: 1200,
+          height: 630,
+          alt: meta.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: meta.title,
+      description: meta.description,
+      images: [`${siteConfig.url}/og-image.jpg`],
     },
   };
 }
@@ -28,7 +59,9 @@ export default function HomePage() {
     <div className="page page-home">
       <div className="flex gap-x-4 items-center p-5">
         <Logo size={24} />
-        <h1 className="lg:text-2xl font-bold">{t('PT. Indonesian')} {t('Tobacco')} {t('Special')} {t('Filter')} {t('Rod')}</h1>
+        <h1 className="lg:text-2xl font-bold">
+          {t('PT. Indonesian')} {t('Tobacco')} {t('Special')} {t('Filter')} {t('Rod')}
+        </h1>
       </div>
 
       <section className="flex flex-col p-[10px] lg:p-[30px]">
