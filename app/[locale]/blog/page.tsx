@@ -1,12 +1,9 @@
 import type { Metadata } from 'next';
 import { Link } from '@/lib/i18n/navigation';
-import { blogPosts } from '@/data/blog';
-import { getBlogContent } from '@/data/blog/content';
+import { getAllBlogPosts, type BlogPostMeta } from '@/lib/blog';
 import { siteConfig } from '@/lib/seo/config';
 import { locales, type Locale } from '@/lib/i18n/config';
 import Image from 'next/image';
-import { getRawT } from '@/lib/i18n/get-raw-t';
-import { useRawT } from '@/lib/i18n/use-raw-t';
 import { useLocale } from 'next-intl';
 
 type Props = {
@@ -86,16 +83,16 @@ const readTimeLabels: Record<string, string> = {
   ko: '분 읽기',
 };
 
-export default function BlogPage() {
-  const t = useRawT();
-  const locale = useLocale();
+export default async function BlogPage({ params }: Props) {
+  const { locale } = await params;
+  const posts = getAllBlogPosts(locale);
 
   return (
     <div className="page page-blog">
       <section className="flex flex-col justify-between items-center p-[10px] lg:p-[30px]">
         <div className="text-center">
           <h1 className="text-[60px] md:text-[80px] lg:text-[100px] leading-none uppercase font-bold">
-            {t('blog') || 'Blog'}
+            Blog
           </h1>
           <p className="text-xl mt-4 text-gray-300">
             {subtitles[locale] || subtitles.en}
@@ -105,52 +102,52 @@ export default function BlogPage() {
 
       <section className="w-full p-[10px] lg:p-[30px]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogPosts.map((post) => {
-            const localizedContent = getBlogContent(post.slug, locale);
-            const title = localizedContent?.title || post.title;
-            const description = localizedContent?.description || post.description;
-            
-            return (
-              <article
-                key={post.slug}
-                className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-white/30 transition-all"
-              >
-                <Link href={`/blog/${post.slug}`}>
-                  <div className="aspect-video bg-gray-800 relative overflow-hidden">
-                    <Image
-                      src={post.image}
-                      alt={title}
-                      fill
-                      className="object-cover"
-                    />
+          {posts.map((post: BlogPostMeta) => (
+            <article
+              key={post.slug}
+              className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-white/30 transition-all"
+            >
+              <Link href={`/blog/${post.slug}`}>
+                <div className="aspect-video bg-gray-800 relative overflow-hidden">
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6">
+                  <div className="flex gap-2 mb-3">
+                    {post.tags.slice(0, 2).map((tag: string) => (
+                      <span
+                        key={tag}
+                        className="text-xs px-2 py-1 bg-white/10 rounded"
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
-                  <div className="p-6">
-                    <div className="flex gap-2 mb-3">
-                      {post.tags.slice(0, 2).map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-xs px-2 py-1 bg-white/10 rounded"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <h2 className="text-xl font-bold mb-2 line-clamp-2">
-                      {title}
-                    </h2>
-                    <p className="text-gray-400 text-sm line-clamp-3">
-                      {description}
-                    </p>
-                    <div className="mt-4 flex items-center justify-between text-sm text-gray-500">
-                      <span>{post.publishedAt}</span>
-                      <span>{post.readingTime} {readTimeLabels[locale] || readTimeLabels.en}</span>
-                    </div>
+                  <h2 className="text-xl font-bold mb-2 line-clamp-2">
+                    {post.title}
+                  </h2>
+                  <p className="text-gray-400 text-sm line-clamp-3">
+                    {post.description}
+                  </p>
+                  <div className="mt-4 flex items-center justify-between text-sm text-gray-500">
+                    <span>{post.publishedAt}</span>
+                    <span>{post.readingTime} {readTimeLabels[locale] || readTimeLabels.en}</span>
                   </div>
-                </Link>
-              </article>
-            );
-          })}
+                </div>
+              </Link>
+            </article>
+          ))}
         </div>
+
+        {posts.length === 0 && (
+          <div className="text-center py-20">
+            <p className="text-gray-400">No blog posts available yet.</p>
+          </div>
+        )}
       </section>
     </div>
   );
