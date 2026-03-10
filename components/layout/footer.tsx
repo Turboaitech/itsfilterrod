@@ -8,6 +8,7 @@ const navs = [
   { id: 'home', path: '/' as const, name: 'home' },
   { id: 'about', path: '/about' as const, name: 'about' },
   { id: 'product', path: '/product' as const, name: 'product' },
+  { id: 'blog', path: '/blog' as const, name: 'blog' },
 ];
 
 const contacts = [
