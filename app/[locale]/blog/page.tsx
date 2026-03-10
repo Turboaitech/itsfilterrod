@@ -116,10 +116,13 @@ export default function BlogPage() {
                 className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-white/30 transition-all"
               >
                 <Link href={`/blog/${post.slug}`}>
-                  <div className="aspect-video bg-gray-800 relative">
-                    <div className="absolute inset-0 flex items-center justify-center text-4xl">
-                      📄
-                    </div>
+                  <div className="aspect-video bg-gray-800 relative overflow-hidden">
+                    <Image
+                      src={post.image}
+                      alt={title}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                   <div className="p-6">
                     <div className="flex gap-2 mb-3">

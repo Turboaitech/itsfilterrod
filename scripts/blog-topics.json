@@ -1,0 +1,46 @@
+{
+  "topics": [
+    {
+      "slug": "filter-rod-quality-control-guide",
+      "keywords": ["quality control", "filter rod testing", "QC standards"],
+      "category": "manufacturing"
+    },
+    {
+      "slug": "sustainable-filter-materials-2026",
+      "keywords": ["eco-friendly filters", "biodegradable", "sustainable tobacco"],
+      "category": "innovation"
+    },
+    {
+      "slug": "asia-pacific-tobacco-market-trends",
+      "keywords": ["Asia tobacco market", "filter demand", "market analysis"],
+      "category": "industry"
+    },
+    {
+      "slug": "charcoal-filter-benefits-explained",
+      "keywords": ["charcoal filter", "activated carbon", "filtration efficiency"],
+      "category": "product"
+    },
+    {
+      "slug": "custom-filter-solutions-for-brands",
+      "keywords": ["custom filters", "brand differentiation", "OEM filter"],
+      "category": "business"
+    },
+    {
+      "slug": "filter-rod-packaging-best-practices",
+      "keywords": ["filter packaging", "storage", "quality preservation"],
+      "category": "manufacturing"
+    },
+    {
+      "slug": "menthol-capsule-technology-deep-dive",
+      "keywords": ["menthol capsule", "flavor technology", "capsule innovation"],
+      "category": "product"
+    },
+    {
+      "slug": "indonesia-tobacco-manufacturing-hub",
+      "keywords": ["Indonesia manufacturing", "Batam factory", "export tobacco"],
+      "category": "industry"
+    }
+  ],
+  "lastPublishedIndex": -1,
+  "publishedSlugs": []
+}
