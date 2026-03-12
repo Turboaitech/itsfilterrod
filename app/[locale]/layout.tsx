@@ -8,6 +8,7 @@ import { Footer } from '@/components/layout/footer';
 import { LayeredBackground } from '@/components/layout/layered-background';
 import { Navbar } from '@/components/layout/navbar';
 import { StructuredData } from '@/components/seo/structured-data';
+import { WhatsAppButton } from '@/components/whatsapp-button';
 import { 
   generateOrganizationSchema, 
   generateLocalBusinessSchema,
@@ -84,6 +85,7 @@ export default async function LocaleLayout({
         <Navbar />
       </div>
       <Toaster position="top-center" />
+      <WhatsAppButton />
     </NextIntlClientProvider>
   );
 }
