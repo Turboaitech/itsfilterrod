@@ -16,7 +16,7 @@ const summary = [
   'We believe imagination beats limitations.',
   'No borders, no hierarchies—just people',
   'creating amazing things together.',
-  "At ITSFT, we're reshaping the future of manufacturing.",
+  "At ITSFR, we're reshaping the future of manufacturing.",
   "Join us, and let's build something incredible.",
 ];
 
