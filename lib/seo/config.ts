@@ -65,4 +65,8 @@ export const localeMetadata: Record<string, { title: string; description: string
     title: '담배 필터 로드 제조업체 | PT. Indonesian Tobacco Special Filter Rod',
     description: '인도네시아 바탐의 고품질 담배 필터 로드 제조업체. 글로벌 담배 산업을 위한 모노 아세테이트, 듀얼, 캡슐, 향료 및 맞춤형 필터 솔루션 제공.',
   },
+  ru: {
+    title: 'Производитель фильтров для сигарет | PT. Indonesian Tobacco Special Filter Rod',
+    description: 'Ведущий производитель высококачественных фильтрующих стержней в Батаме, Индонезия. Моноацетатные, двойные, капсульные, ароматизированные и индивидуальные фильтровые решения для мировой табачной промышленности.',
+  },
 };
