@@ -26,7 +26,8 @@ export const siteConfig = {
     postalCode: '29444',
   },
   contact: {
-    phone: '+62 778 5507045',
+    phone: '+62 778 5508045',
+    whatsapp: '+62 821-1258-8168',
     email: 'indotobaccospecial@gmail.com',
     salesEmail: 'marketing@itsfilterrod.com',
   },
