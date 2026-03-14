@@ -128,7 +128,7 @@ export function getAllBlogPosts(locale: string = 'en'): BlogPostMeta[] {
   const posts = slugs
     .map((slug) => {
       // Remove locale suffix if present
-      const baseSlug = slug.replace(/\.(en|zh|id|vi|ms|ja|ko)$/, '');
+      const baseSlug = slug.replace(/\.(en|zh|id|vi|ms|ja|ko|ru)$/, '');
       return getBlogPostMeta(baseSlug, locale);
     })
     .filter((post): post is BlogPostMeta => post !== null);
