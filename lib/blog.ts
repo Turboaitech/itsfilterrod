@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
+import remarkGfm from 'remark-gfm';
 import html from 'remark-html';
 
 export interface BlogPost {
@@ -99,6 +100,7 @@ export async function getBlogPost(slug: string, locale: string = 'en'): Promise<
 
     // Convert markdown to HTML
     const processedContent = await remark()
+      .use(remarkGfm)
       .use(html)
       .process(content);
     const contentHtml = processedContent.toString();
