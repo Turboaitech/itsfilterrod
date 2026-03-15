@@ -169,7 +169,7 @@ export function ContactForm() {
           <button
             type="submit"
             disabled={loading}
-            className="cbutton rounded-full w-full py-3 text-xl font-bold capitalize transition-opacity disabled:opacity-50"
+            className="cbutton rounded-full w-full py-3 text-xl font-bold capitalize transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] active:scale-95 disabled:opacity-50 disabled:hover:scale-100 disabled:hover:shadow-none"
           >
             {loading ? '...' : t('submit')}
           </button>
